@@ -16,9 +16,8 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     networks:
-      monitoring:
-        aliases:
-          - prometheus
+      - grafana
+      - prometheus
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -30,9 +29,12 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
       - ./grafana:/etc/grafana/provisioning/datasources
+    networks:
+      - grafana
 
 networks:
-  monitoring:
+  grafana:
+  prometheus:
 
 volumes:
   prometheus_data:
