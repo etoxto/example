@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.36.2
+    ports:
+      - 9090:9090
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      monitoring:
+        aliases:
+          - prometheus
+
+networks:
+  monitoring:
+
+volumes:
+  prometheus_data:
